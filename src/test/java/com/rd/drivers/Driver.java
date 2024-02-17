@@ -7,6 +7,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -14,21 +15,17 @@ import java.util.concurrent.TimeUnit;
 public class Driver {
     public static WebDriver webDriver;
 
-    @BeforeSuite
-    public void initializeDriver() throws MalformedURLException {
+    public WebDriver initializeDriver() throws MalformedURLException {
         webDriver = DriverFactory.getDriver();
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         webDriver.manage().window().maximize();
+
+        return webDriver;
     }
 
-    @AfterTest
-    public void closeDriver() {
-        webDriver.close();
-    }
 
-    @AfterSuite
     public void quitDriver() {
         webDriver.quit();
     }
